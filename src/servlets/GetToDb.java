@@ -2,12 +2,13 @@ package servlets;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dbAccess.Suggbox;
+import database.Suggbox;
 
 public class GetToDb extends HttpServlet {
 
@@ -18,8 +19,8 @@ public class GetToDb extends HttpServlet {
 			throws ServletException, IOException {
 
 		/* Initialisation de l'objet Java et récupération des messages */
-		Suggbox test = new Suggbox();
-		List<String> messages = test.executerTests(request);
+		Suggbox suggbox = new Suggbox();
+		List<String> messages = suggbox.executerTests(request);
 
 		/* Enregistrement de la liste des messages dans l'objet requête */
 		request.setAttribute(ATT_MESSAGES, messages);

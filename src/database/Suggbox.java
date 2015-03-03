@@ -1,4 +1,4 @@
-package dbAccess;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,6 +17,7 @@ public class Suggbox {
 	private List<String> messages = new ArrayList<String>();
 
 	public List<String> executerTests(HttpServletRequest request) {
+		System.out.println("hey0");
 		/* Chargement du driver JDBC pour MySQL */
 		try {
 			messages.add("Chargement du driver...");
@@ -28,9 +29,9 @@ public class Suggbox {
 		}
 
 		/* Connexion à la base de données */
-		String url = "jdbc:mysql://localhost:3306/bdd_contacts";
-		String utilisateur = "java";
-		String motDePasse = "123456";
+		String url = "jdbc:mysql://localhost:3306/suggboxDB";
+		String utilisateur = "root";
+		String motDePasse = "thatismypath";
 		Connection connexion = null;
 		Statement statement = null;
 		ResultSet resultat = null;
@@ -45,20 +46,19 @@ public class Suggbox {
 			messages.add("Objet requête créé !");
 
 			/* Exécution d'une requête de lecture */
-			resultat = statement
-					.executeQuery("SELECT id, nom, prenom, email FROM contact;");
+			System.out.println("hey");
+			resultat = statement.executeQuery("SELECT * FROM User;");
+			System.out.println("hey2");
 			messages.add("Requête \"SELECT id, nom, prenom, email FROM contact;\" effectuée !");
 
 			/* Récupération des données du résultat de la requête de lecture */
 			while (resultat.next()) {
-				int idContact = resultat.getInt("id");
-				String nomContact = resultat.getString("nom");
-				String prenomContact = resultat.getString("prenom");
-				String emailContact = resultat.getString("email");
+				int idContact = resultat.getInt("id_user");
+				String nomContact = resultat.getString("firstname");
+				
 				/* Formatage des données pour affichage dans la JSP finale. */
 				messages.add("Données retournées par la requête : id = "
-						+ idContact + ", nom = " + nomContact + ", prenom = "
-						+ prenomContact + ", email = " + emailContact + ".");
+						+ idContact + ", nom = " + nomContact + ".");
 			}
 		} catch (SQLException e) {
 			messages.add("Erreur lors de la connexion : <br/>" + e.getMessage());
