@@ -9,7 +9,7 @@ delete from `Group`;
 
 -- CREATE TABLE IF NOT EXISTS `Group` (
 --   `id_group` int(11) NOT NULL AUTO_INCREMENT,
---   `name_group` int(11) NOT NULL,
+--   `name_group` String(100) NOT NULL,
 --   `service_group` text NOT NULL,
 
 insert into `Group` (id_group, name_group, service_group) values(1, 'SI','service informatique');

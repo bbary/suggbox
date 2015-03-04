@@ -185,9 +185,26 @@ public class SuggboxDB implements DB {
 	}
 
 	@Override
-	public void updateIdea(String ideaTitle) {
-		
-		
+	public void updateIdea(String ideaTitle, Idea new_idea) {
+		ResultSet result=null;
+		// id_idea, text_idea, title_idea, id_user
+		try {
+			stmt=connexion.prepareStatement("update idea set text_idea=?, title_idea=? where title_idea=?");
+			stmt.setString(1, new_idea.getIdeaText());
+			stmt.setString(2, new_idea.getIdeaTitle());
+			stmt.setString(3, ideaTitle);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+		if (stmt != null)
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	    }
 	}
 
 	@Override
