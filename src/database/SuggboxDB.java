@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Comment;
+import model.Group;
 import model.Idea;
 import model.Note;
 import model.User;
@@ -46,10 +48,12 @@ public class SuggboxDB implements DB {
 		try {
 
 			stmt = connexion
-					.prepareStatement("insert into User(login, firstname, lastname) values(?, ?, ?)");
-			stmt.setString(1, u.getLogin());
-			stmt.setString(1, u.getFirstName());
-			stmt.setString(1, u.getLastName());
+					.prepareStatement("insert into User(id_user, login, firstname, lastname) values(?, ?, ?, ?)");
+			User.createUser();
+			stmt.setInt(1, User.getIdUser());
+			stmt.setString(2, u.getLogin());
+			stmt.setString(3, u.getFirstName());
+			stmt.setString(4, u.getLastName());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -112,7 +116,7 @@ public class SuggboxDB implements DB {
 			while (resultat.next()) {
 				firstname = resultat.getString("firstname");
 				lastname = resultat.getString("lastname");
-				loginUser = resultat.getString("firstname");
+				loginUser = resultat.getString("login");
 			}
 			u.setFirstName(firstname);
 			u.setLastName(lastname);
@@ -147,7 +151,9 @@ public class SuggboxDB implements DB {
 		try {
 
 			stmt = connexion
-					.prepareStatement("insert into idea(text_idea, title_idea) values(?, ?)");
+					.prepareStatement("insert into idea(id_idea, text_idea, title_idea) values(?, ?, ?)");
+			Idea.createIdea();
+			stmt.setInt(1, Idea.getIdIdea());
 			stmt.setString(1, i.getIdeaText());
 			stmt.setString(1, i.getIdeaTitle());
 			stmt.executeUpdate();
@@ -211,32 +217,46 @@ public class SuggboxDB implements DB {
 	public Idea getIdea(String ideaTitle) {
 		Idea idea = new Idea();
 		ResultSet resultat = null;
+		ResultSet resultat2 = null;
 		try {
 
 			stmt = connexion
-					.prepareStatement("SELECT title_idea, text_idea, login, id_note  FROM idea, User, note where text_idea=? AND User.id_user=idea.id_user AND note.id_note=user.id_user)");
+					.prepareStatement("select title_idea, text_idea, login from User, idea where idea.title_idea=? AND idea.id_user=User.id_user");
 			stmt.setString(1, ideaTitle);
 			resultat = stmt.executeQuery();
+			PreparedStatement stmt2=connexion.prepareStatement("select id_note, title_idea, text_idea, login, nbr_stars from User, note, idea where idea.title_idea=? AND idea.id_user=User.id_user AND idea.id_idea=note.id_idea");
+			stmt2.setString(1, ideaTitle);
+			
+			resultat2 = stmt2.executeQuery();
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		String title = null;
 		String text = null;
 		User owner=new User();
-		Note note=new Note();
+		int idNote=0;
+		ArrayList<Note> notes=new ArrayList<Note>();
 		try {
 
 			while (resultat.next()) {
 				title = resultat.getString("title_idea");
-				text = resultat.getString("text_idea");
+				text  = resultat.getString("text_idea");
 				owner = getUser(resultat.getString("login"));
-				note  = getNote(resultat.getString("id_note"));
+				//note  = getNote(resultat.getString("id_note"));
 				
 			}
+			while (resultat2.next()) {
+				idNote=resultat2.getInt("id_note");
+				notes.add(getNote(idNote));												
+			}
+			
 			idea.setIdeaText(text);
 			idea.setIdeaTitle(title);
 			idea.setIdeaOwner(owner);
-			idea.setNote(note);
+			idea.setNotes(notes);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -256,8 +276,70 @@ public class SuggboxDB implements DB {
 					e.printStackTrace();
 				}
 		}
-
 		return idea;
+	}
+	
+
+	@Override
+	public void addComment(Comment comment) {
+		try {
+			stmt = connexion
+					.prepareStatement("insert into comment(id_comment, text_comment, id_idea, id_user) values(?, ?, ?, ?)");
+			Comment.createComment();     
+			stmt.setString(1, Comment.getIdComment()); 
+			stmt.setString(2, comment.getComment());
+			stmt.setString(3, comment.getIdeaTitle());
+			stmt.setString(4, comment.getIdeaTitle());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+	}
+
+	@Override
+	public ArrayList<Comment> getComments(String ideaTitle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addNote(Note n) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<Note> getNotes(String ideaTitle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addGroup(Group p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteGroup(String namegroup) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void getGroup(String namegroup) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	@Override

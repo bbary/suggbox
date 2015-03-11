@@ -2,12 +2,13 @@ package servlets;
 
 import java.io.IOException;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Note;
+import model.User;
 import database.SuggboxDB;
 
 public class Example extends HttpServlet {
@@ -17,7 +18,8 @@ public class Example extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		
 		/* Initialisation de l'objet Java et récupération des messages */
 		String url = "jdbc:mysql://localhost:3306/suggboxDB";
 		String utilisateur = "root";
@@ -26,7 +28,11 @@ public class Example extends HttpServlet {
 		SuggboxDB suggbox = new SuggboxDB(url, utilisateur, motDePasse, jdbcDriver);
 		/*
 		 * interaction avec le model (base de données) à travers la classe SuggboxDB
+		 * 
 		 */
+		User u=new User();
+		u.createUser();
+		
 		suggbox.closeConnection();
 		
 		

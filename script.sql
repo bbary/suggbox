@@ -5,8 +5,6 @@ delete from `User`;
 delete from `Group`;
 
 
-
-
 -- CREATE TABLE IF NOT EXISTS `Group` (
 --   `id_group` int(11) NOT NULL AUTO_INCREMENT,
 --   `name_group` String(100) NOT NULL,
