@@ -9,6 +9,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form name="firstForm" action="login"
+style="width:50%;margin:auto;background-color:#c1d9fc;padding-bottom:15px;" method="post">
+                 
+        <h2 style="text-align:center;color:white;background-color:#6683b1;">Suggbox</h2>
+        <p style="text-align:center;">Nom : <input type="text" name="login" /></p>
+        <p style="text-align:center;">Prénom : <input type="password" name="pwd" /></p>
+             
+        <p style="text-align:center;width:50%;margin:auto;"><input type="submit" name="Valider" value="Valider"/></p>
+    </form>
+    <p> ${messagerreur} </p>
 	<form name="firstForm" action="Controleur"
 		style="width: 50%; margin: auto; background-color: #c1d9fc; padding-bottom: 15px;"
 		method="post">
@@ -29,4 +39,4 @@
 
 	</form>
 </body>
-</html>
+</html> 
