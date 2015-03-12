@@ -14,6 +14,7 @@ public interface DB {
 	void deleteIdea(String ideaTitle);  // the database column title_idea is unique
 	void updateIdea(String ideaTitle, Idea idea);
 	Idea getIdea(String ideaTitle);
+	ArrayList<Idea> getAllIdeas();
 	
 	//id_comment, text_comment, id_idea, id_user
 	void addComment(Comment c);
@@ -21,12 +22,12 @@ public interface DB {
 	
 	//id_note, nbr_stars, id_idea, id_user
 	void addNote(Note n);
-	ArrayList<Note> getNotes(String ideaTitle);
+	Note getNote(int  idNote);
 	
 	//id_group, name_group, service_group
 	void addGroup(Group p);
 	void deleteGroup(String namegroup);
-	void getGroup(String namegroup);
+	Group getGroup(String namegroup);
 	
 	void closeConnection();
 	

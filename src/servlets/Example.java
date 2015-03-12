@@ -30,10 +30,11 @@ public class Example extends HttpServlet {
 		 * interaction avec le model (base de données) à travers la classe SuggboxDB
 		 * 
 		 */
-		User u=new User();
-		u.createUser();
+//		User u=new User();
+//		u.createUser();
 		
 		suggbox.closeConnection();
+		//System.out.println("ok");
 		
 		
 		//request.setAttribute(ATT_MESSAGES, messages);

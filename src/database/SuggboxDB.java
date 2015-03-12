@@ -245,7 +245,7 @@ public class SuggboxDB implements DB {
 				title = resultat.getString("title_idea");
 				text  = resultat.getString("text_idea");
 				owner = getUser(resultat.getString("login"));
-				//note  = getNote(resultat.getString("id_note"));
+				
 				
 			}
 			while (resultat2.next()) {
@@ -278,18 +278,87 @@ public class SuggboxDB implements DB {
 		}
 		return idea;
 	}
-	
 
 	@Override
 	public void addComment(Comment comment) {
 		try {
 			stmt = connexion
 					.prepareStatement("insert into comment(id_comment, text_comment, id_idea, id_user) values(?, ?, ?, ?)");
-			Comment.createComment();     
-			stmt.setString(1, Comment.getIdComment()); 
+			Comment.createComment();  // increment id    
+			stmt.setInt(1, Comment.getIdComment()); 
 			stmt.setString(2, comment.getComment());
-			stmt.setString(3, comment.getIdeaTitle());
-			stmt.setString(4, comment.getIdeaTitle());
+			stmt.setInt(3, comment.getCommentedIdea().getIdIdea());
+			stmt.setInt(4, comment.getCommentator().getIdUser());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}		
+	}
+
+	@Override
+	public ArrayList<Comment> getComments(String ideaTitle) {
+		ArrayList<Comment> comments=new ArrayList<Comment>();
+		ResultSet res=null;
+		try {
+			stmt=connexion.prepareStatement("select id_comment, text_comment, title_idea, login from comment,idea, User where comment.id_idea=idea.id_idea AND idea.title_idea=? AND comment.id_user=User.id_user;");
+			stmt.setString(1, ideaTitle);
+			res=stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+		while(res.next()){
+			Comment com=new Comment();
+			com.setComment(res.getString("text_comment"));
+			com.setCommentedIdea(getIdea(res.getString("title_idea")));
+			com.setCommentator(getUser(res.getString("login")));
+			comments.add(com);
+					
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			if (res != null)
+				try {
+					res.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		return comments;
+
+	}
+
+	@Override
+	public void addNote(Note note) {
+		try {
+			stmt = connexion
+					.prepareStatement("insert into note(id_note, nbr_stars, id_idea, id_user) values(?, ?, ?, ?)");
+			note.createNote();  // increment id    
+			stmt.setInt(1, note.getIdNote()); 
+			stmt.setInt(2, note.getStars());
+			stmt.setInt(3, note.getIdea().getIdIdea());
+			stmt.setInt(4, note.getEvaluator().getIdUser());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -307,39 +376,155 @@ public class SuggboxDB implements DB {
 	}
 
 	@Override
-	public ArrayList<Comment> getComments(String ideaTitle) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addNote(Note n) {
-		// TODO Auto-generated method stub
+	public Note getNote(int idNote) {
+		Note note=new Note();
+		ResultSet result=null;
+		try {
+			stmt=connexion.prepareStatement("select id_note, login, title_idea from note, User, idea where id_note=? AND User.id_user=note.id_user AND idea.id_idea=note.id_idea");
+			stmt.setInt(1, idNote);
+			result=stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		try {
+			note.setEvaluator(getUser(result.getString("login")));
+			note.setIdea(getIdea(result.getString("title_idea")));
+			note.setStars(result.getInt("nbr_stars"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if(stmt!=null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(result!=null)
+				try {
+					result.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+		return note;		
 	}
 
 	@Override
-	public ArrayList<Note> getNotes(String ideaTitle) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public void addGroup(Group group) {
 
-	@Override
-	public void addGroup(Group p) {
-		// TODO Auto-generated method stub
+		try {
+			stmt = connexion
+					.prepareStatement("insert into Group(id_group, name_group, service_group) values(?, ?, ?)");
+			group.createGroup();  // increment id    
+			stmt.setInt(1, group.getIdGroup()); 
+			stmt.setString(2, group.getName());
+			stmt.setString(3, group.getService());
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 		
 	}
 
 	@Override
 	public void deleteGroup(String namegroup) {
-		// TODO Auto-generated method stub
+		try {
+			stmt = connexion.prepareStatement("delete from Group where name=?");
+			stmt.setString(1, namegroup);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stmt != null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 		
 	}
 
 	@Override
-	public void getGroup(String namegroup) {
-		// TODO Auto-generated method stub
+	public Group getGroup(String namegroup) {
+		Group group=new Group();
 		
+		ResultSet result=null;
+		try {
+			stmt=connexion.prepareStatement("select name_group, service_group from Group where name_group=?");
+			stmt.setString(1, namegroup);
+			result=stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			group.setName(result.getString("name_group"));
+			group.setService(result.getString("service_group"));
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{
+			if(stmt!=null)
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			if(result!=null)
+				try {
+					result.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		
+		return group;
+		
+	}
+	
+	@Override
+	public ArrayList<Idea> getAllIdeas() {
+		ArrayList<Idea> ideas=new ArrayList<Idea>();
+		ResultSet result=null;
+		try {
+			stmt=connexion.prepareStatement("select title_idea from idea");
+			result=stmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while(result.next()){
+				ideas.add(getIdea(result.getString("title_idea")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ideas;
 	}
 	
 	@Override
@@ -353,5 +538,7 @@ public class SuggboxDB implements DB {
 			}
 
 	}
+
+
 
 }
