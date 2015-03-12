@@ -1,17 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About</title>
+    <title>Create</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/grid_12.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/slider.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
     <script src="js/jquery-1.7.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
     <script src="js/cufon-yui.js"></script>
     <script src="js/cufon-replace.js"></script>
     <script src="js/Bilbo_400.font.js"></script>
+    <script src="js/tms-0.4.1.js"></script>
+    <script>
+		$(document).ready(function(){				   	
+			$('.slider')._TMS({
+				show:0,
+				pauseOnHover:true,
+				prevBu:false,
+				nextBu:false,
+				playBu:false,
+				duration:800,
+				preset:'fade',
+				pagination:true,
+				pagNums:false,
+				slideshow:7000,
+				numStatus:false,
+				banners:'fade',
+				waitBannerAnimation:false,
+				progressBar:false
+			})		
+		});
+	</script>
 	<!--[if lt IE 8]>
        <div style=' clear: both; text-align:center; position: relative;'>
          <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
@@ -31,17 +53,16 @@
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
               <nav>  
                 <ul class="menu">
-                      <li><a href="index.html">Home</a></li>
-                      <li class="current"><a href="about.html">About</a></li>
-                      <li><a href="services.html">Services</a></li>
-                      <li><a href="products.html">Products</a></li>
-                      <li><a href="contacts.html">Contacts</a></li>
+                      <li><a href="index.jsp">Create</a></li>
+                      <li><a href="services.jsp">Display</a></li>
+                      <li><a href="products.jsp">Delete</a></li>
+                      <li><a href="contacts.jsp">Logout</a></li>
                   </ul>
               </nav>
               <div class="clear"></div>
           </div>
       </div>
-    </header>  
+    </header>
   <!--==============================content================================-->
     <section id="content"></div>
     	<div class="container_12 top">

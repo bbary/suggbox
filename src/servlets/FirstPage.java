@@ -54,14 +54,13 @@ public class FirstPage extends HttpServlet {
     	        
     	         
     	        if(this.paramLogin.equalsIgnoreCase(login) && this.paramPassword.equalsIgnoreCase(pwd)){
-    	            dispatcher = request.getRequestDispatcher("/Menu.jsp");
+    	            dispatcher = request.getRequestDispatcher("/create.jsp");
     	             String msg1 = "Hello " + login +" Your login is sucessful";
     	            request.setAttribute("messagerreur", msg1);
     	            System.out.println("affichage ok ");
     	        }
     	        else{
-    	        	
-    	            dispatcher = request.getRequestDispatcher("/index.jsp");
+    	            dispatcher = request.getRequestDispatcher("/login.jsp");
     	            String msg2 = "Hello " + login +" Your login is failed";
     	            request.setAttribute("messagerreur", msg2);
     	        }

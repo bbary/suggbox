@@ -53,10 +53,10 @@
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
               <nav>  
                 <ul class="menu">
-                      <li><a href="index.html">Create</a></li>
-                      <li><a href="services.html">Display</a></li>
-                      <li><a href="products.html">Delete</a></li>
-                      <li><a href="contacts.html">Logout</a></li>
+                      <li><a href="index.jsp">Create</a></li>
+                      <li><a href="services.jsp">Display</a></li>
+                      <li><a href="products.jsp">Delete</a></li>
+                      <li><a href="contacts.jsp">Logout</a></li>
                   </ul>
               </nav>
               <div class="clear"></div>
@@ -75,19 +75,17 @@
     </div>
 <FORM method="post" action="">
 <table width="247" height="10" border="0">
-   <div class="grid_4">
+   <div class="container_12 top">
             	<h2>Title of Idea</h2>
             	<form id="form" method="post" >
-                    <fieldset>
-                      <label><input type="text" value="Title" size="35"onBlur="if(this.value=='') this.value='Title'" onFocus="if(this.value =='Title' ) this.value=''"></label><br><br>
-                      <label><textarea rows="4" cols="100" onBlur="if(this.value==''){this.value='Idea'}" onFocus="if(this.value=='e'){this.value='Idea'}"></textarea></label>
 
-                      <div class="btns"><a href="#" class="button">Clear</a><a href="#" class="button" onClick="document.getElementById('form').submit()">Send</a></div>
-                    </fieldset>  
+                      <label><input type="text" value="Title" size="35" onBlur="if(this.value=='') {this.value='Title'}" onFocus="if(this.value =='Title' ) this.value=''"></label><br>
+                      <h2>Idea</h2>
+                      <label><textarea rows="4" cols="100" onBlur="if(this.value=='') {this.value='Idea'}" onFocus="if(this.value =='Idea' ) this.value=''"></textarea></label>
+
+                      <div class="btns"><a href="#" class="button">Clear</a><a href="#" class="button" onClick="document.getElementById('form').submit()">Send</a></div> 
                   </form> 
             </div>
-
-<div style=' clear: both; text-align:center; position: relative; size :'12'class="banner"><p class="text-1">Idea </p></div>  
 </table>
 </section>
 </body>
