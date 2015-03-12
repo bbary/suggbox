@@ -13,9 +13,9 @@ import javax.servlet.RequestDispatcher;
  * Servlet implementation class login
  */
 
-@WebServlet("/login")
+@WebServlet("/")
 
-public class login extends HttpServlet {
+public class FirstPage extends HttpServlet {
 	
     	  	private String paramLogin;
     	    private String paramPassword;
@@ -29,7 +29,7 @@ public class login extends HttpServlet {
     	    /**
     	     * @see HttpServlet#HttpServlet()
     	     */
-    	    public login() {
+    	    public FirstPage() {
     	        super();
     	        // TODO Auto-generated constructor stub
     	    }
