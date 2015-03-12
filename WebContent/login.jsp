@@ -51,42 +51,28 @@
        <div> 
           <div>                 	
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
-              <nav>  
-                <ul class="menu">
-                      <li><a href="index.html">Create</a></li>
-                      <li><a href="services.html">Display</a></li>
-                      <li><a href="products.html">Delete</a></li>
-                      <li><a href="contacts.html">Logout</a></li>
-                  </ul>
-              </nav>
+          
               <div class="clear"></div>
           </div>
       </div>
-    </header>  
-<section id="content">
-    <div id="slider">
-       <div class="slider">
-          <ul class="items">
-              <li><img src="images/slider-1.jpg" alt="" /><div class="banner"><p class="text-1">We've Got <strong>an Idea!</strong></p><p class="text-2"></p></div></li>
-              <li><img src="images/slider-2.jpg" alt="" /><div class="banner"><p class="text-1">Here We <strong>Are!</strong></p><p class="text-2"></p></div></li>
-              <li><img src="images/slider-3.jpg" alt="" /><div class="banner"><p class="text-1">Stay <strong>Creative!</strong></p><p class="text-2"></p></div></li>
-          </ul>
-       </div>
-    </div>
-<FORM method="post" action="">
-<table width="247" height="10" border="0">
-   <div class="container_12 top">
-            	<h2>Title of Idea</h2>
-            	<form id="form" method="post" >
-
-                      <label><input type="text" value="Title" size="35" onBlur="if(this.value=='') {this.value='Title'}" onFocus="if(this.value =='Title' ) this.value=''"></label><br>
-                      <h2>Idea</h2>
-                      <label><textarea rows="4" cols="100" onBlur="if(this.value=='') {this.value='Idea'}" onFocus="if(this.value =='Idea' ) this.value=''"></textarea></label>
-
-                      <div class="btns"><a href="#" class="button">Clear</a><a href="#" class="button" onClick="document.getElementById('form').submit()">Send</a></div> 
-                  </form> 
+    </header>
+  <!--==============================content================================-->
+    <section id="content"></div>
+    	<div class="container_12 top">
+                      <form name="firstForm" action="login"
+						style="width:50%;margin:auto;padding-bottom:15px;" method="post">
+                 
+        				<h2 style="text-align:center;">Suggbox</h2>
+        				<p style="text-align:center;"> Name : <input type="text" name="login" /></p>
+        				<p style="texomt-align:center;"> Password : <input type="password" name="pwd" /></p>
+             
+        				<p style="text-align:center;width:50%;margin:auto;"><input type="submit" name="Valider" value="Valider"/></p>
+    					</form>
+    					<p> ${messagerreur} </p>
             </div>
-</table>
-</section>
+            <div class="clear"></div>
+        </div>
+    </section> 
+
 </body>
 </html>

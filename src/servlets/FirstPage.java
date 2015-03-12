@@ -15,7 +15,7 @@ import javax.servlet.RequestDispatcher;
 
 @WebServlet("/login")
 
-public class login extends HttpServlet {
+public class FirstPage extends HttpServlet {
 	
     	  	private String paramLogin;
     	    private String paramPassword;
@@ -29,7 +29,7 @@ public class login extends HttpServlet {
     	    /**
     	     * @see HttpServlet#HttpServlet()
     	     */
-    	    public login() {
+    	    public FirstPage() {
     	        super();
     	        // TODO Auto-generated constructor stub
     	    }
@@ -54,14 +54,14 @@ public class login extends HttpServlet {
     	        
     	         
     	        if(this.paramLogin.equalsIgnoreCase(login) && this.paramPassword.equalsIgnoreCase(pwd)){
-    	            dispatcher = request.getRequestDispatcher("/Menu.jsp");
+    	            dispatcher = request.getRequestDispatcher("/index.jsp");
     	             String msg1 = "Hello " + login +" Your login is sucessful";
     	            request.setAttribute("messagerreur", msg1);
     	            System.out.println("affichage ok ");
     	        }
     	        else{
     	        	
-    	            dispatcher = request.getRequestDispatcher("/index.jsp");
+    	            dispatcher = request.getRequestDispatcher("/contacts.jsp");
     	            String msg2 = "Hello " + login +" Your login is failed";
     	            request.setAttribute("messagerreur", msg2);
     	        }
