@@ -8,12 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
-	 
-/**
- * Servlet implementation class login
- */
 
-@WebServlet("/")
 
 public class FirstPage extends HttpServlet {
 	
@@ -37,30 +32,32 @@ public class FirstPage extends HttpServlet {
     	    /**
     	     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
     	     */
-    	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        	    
+    		public void doGet(HttpServletRequest request, HttpServletResponse response)
+    				throws ServletException, IOException {
+    			RequestDispatcher dispatcher = null;
+    			dispatcher = request.getRequestDispatcher("login.jsp");
+    			dispatcher.forward(request, response);
     	    }
     	 
     	    /**
     	     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
     	     */
-    	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	        // TODO Auto-generated method stub
+    	    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    	    	System.out.println("hello");
     	        String login = request.getParameter("login");
     	        String pwd = request.getParameter("pwd");
     	         
     	        RequestDispatcher dispatcher = null;
     	        
-    	        
-    	         
     	        if(this.paramLogin.equalsIgnoreCase(login) && this.paramPassword.equalsIgnoreCase(pwd)){
-    	            dispatcher = request.getRequestDispatcher("/create.jsp");
+    	            dispatcher = request.getRequestDispatcher("create.jsp");
     	             String msg1 = "Hello " + login +" Your login is sucessful";
     	            request.setAttribute("messagerreur", msg1);
     	            System.out.println("affichage ok ");
     	        }
     	        else{
-    	            dispatcher = request.getRequestDispatcher("/login.jsp");
+    	            dispatcher = request.getRequestDispatcher("login.jsp");
     	            String msg2 = "Hello " + login +" Your login is failed";
     	            request.setAttribute("messagerreur", msg2);
     	        }

@@ -34,7 +34,7 @@ public class Example extends HttpServlet {
 //		u.createUser();
 		
 		suggbox.closeConnection();
-		//System.out.println("ok");
+		System.out.println("ok");
 		
 		
 		//request.setAttribute(ATT_MESSAGES, messages);
