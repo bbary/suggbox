@@ -54,7 +54,7 @@
               <nav>  
                 <ul class="menu">
                       <li><a href="index.jsp">Create</a></li>
-                      <li><a href="services.jsp">Display</a></li>
+                      <li><a href="display.jsp">Display</a></li>
                       <li><a href="products.jsp">Delete</a></li>
                       <li><a href="contacts.jsp">Logout</a></li>
                   </ul>
