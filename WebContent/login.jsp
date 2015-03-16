@@ -51,7 +51,6 @@
        <div> 
           <div>                 	
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
-          
               <div class="clear"></div>
           </div>
       </div>
@@ -59,20 +58,19 @@
   <!--==============================content================================-->
     <section id="content"></div>
     	<div class="container_12 top">
-                      <form name="firstForm" action="FirstPage"
+                      <form name="firstForm" action="create"
 						style="width:50%;margin:auto;padding-bottom:15px;" method="post">
                  
         				<h2 style="text-align:center;">Suggbox</h2>
         				<p style="text-align:center;"> Name : <input type="text" name="login" /></p>
-        				<p style="texomt-align:center;"> Password : <input type="password" name="pwd" /></p>
+        				<p style="text-align:center;"> Password : <input type="password" name="pwd" /></p>
              
         				<p style="text-align:center;width:50%;margin:auto;"><input type="submit" name="Valider" value="Valider"/></p>
     					</form>
     					<p> ${messagerreur} </p>
-            </div>
+          </div>
             <div class="clear"></div>
         </div>
     </section> 
-
 </body>
 </html>
