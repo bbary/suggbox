@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" metadata-complete="true" version="3.0">
+  <display-name>suggbox</display-name>
+  
+    <welcome-file>login.jsp</welcome-file>
+
+<servlet>
+=======
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>suggb</display-name>
   <welcome-file-list>
@@ -11,14 +19,19 @@
   </welcome-file-list>
   
   <servlet>
+>>>>>>> 0ccc37027d5c65889a0e5bc85c9cb361265e930a
     <servlet-name>FirstPage</servlet-name>
     <servlet-class>servlets.FirstPage</servlet-class>
 </servlet>
   
   <servlet-mapping>
     <servlet-name>FirstPage</servlet-name>
+<<<<<<< HEAD
+    <url-pattern>/FirstPage</url-pattern>
+=======
     <url-pattern>/</url-pattern>
 
+>>>>>>> 0ccc37027d5c65889a0e5bc85c9cb361265e930a
 </servlet-mapping> 
 
 <servlet>

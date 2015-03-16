@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Create</title>
+    <title>Display</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/grid_12.css">
@@ -53,8 +53,8 @@
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
               <nav>  
                 <ul class="menu">
-                      <li><a href="index.jsp">Create</a></li>
-                      <li><a href="services.jsp">Display</a></li>
+                      <li><a href="create.jsp">Create</a></li>
+                      <li><a href="display.jsp">Display</a></li>
                       <li><a href="products.jsp">Delete</a></li>
                       <li><a href="contacts.jsp">Logout</a></li>
                   </ul>
@@ -67,6 +67,11 @@
   </table>
     <section id="content"></div>
       <form>
+      
+      <cufon class="cufon cufon-canvas" alt="Start-Up" style="width: 142px; height: 50px;">
+<canvas width="189" height="53" style="width: 189px; height: 53px; top: 5px; left: -9px;"></canvas>
+<cufontext>Start-Up</cufontext>
+</cufon>
     	<div class="container_12 top">
             <div class="grid_4">
 
@@ -78,27 +83,15 @@
                   site Site =(site)monIterator.next();
                 }
               %>
-              
-            	<h2>Designing</h2>
-                <img src="images/page3-img1.jpg" alt="" class="img-border top-3">
-                <p class="top-4"><a href="#" class="link"><%=Site.getLibelle()%></a><br>
-                <%=Site.getLibelle()%></p>
+              <div class="grid_12 box-2 pad-1">
+				<div>
+				<p class="text-3">
+				<p class="text-4">
+				<p class="top-4"><a href="#" class="link"><%=Site.getLibelle()%></a><br>
+                	<%=Site.getLibelle()%></p>
                 <a href="#" class="button top-4">Read More</a>
             </div>
-            <div class="grid_4">
-            	<h2>Programming</h2>
-                <img src="images/page3-img2.jpg" alt="" class="img-border top-3">
-                <p class="top-4"><a href="#" class="link"><%=Site.getLibelle()%></a><br>
-                <%=Site.getLibelle()%></p>
-                <a href="#" class="button top-4">Read More</a>
-            </div>
-            <div class="grid_4">
-            	<h2>SEO</h2>
-                <img src="images/page3-img3.jpg" alt="" class="img-border top-3">
-                <p class="top-4"><a href="#" class="link"> </a><%=Site.getLibelle()%><br>
-                <%=Site.getLibelle()%></p>
-                <a href="#" class="button top-4">Read More</a>
-            </div>
+			</div>
         </div>
         </form>
     </section> 
