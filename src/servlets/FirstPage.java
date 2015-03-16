@@ -20,14 +20,7 @@ public class FirstPage extends HttpServlet {
     	        this.paramPassword = "zero";
     	    }
     	    private static final long serialVersionUID = 1L;
-    	        
-    	    /**
-    	     * @see HttpServlet#HttpServlet()
-    	     */
-    	    public FirstPage() {
-    	        super();
-    	        // TODO Auto-generated constructor stub
-    	    }
+
     	 
     	    /**
     	     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
