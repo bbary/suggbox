@@ -44,7 +44,7 @@ public class FirstPage extends HttpServlet {
     	     */
     	    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    	    	System.out.println("hello");
+    	    	
     	        String login = request.getParameter("login");
     	        String pwd = request.getParameter("pwd");
     	         
