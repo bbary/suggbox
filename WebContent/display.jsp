@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html lang="en">
 <head>
     <title>Display</title>
@@ -52,11 +56,11 @@
           <div>                 	
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
               <nav>  
-                <ul class="menu">
+                 <ul class="menu">
                       <li><a href="create.jsp">Create</a></li>
                       <li><a href="display.jsp">Display</a></li>
                       <li><a href="products.jsp">Delete</a></li>
-                      <li><a href="contacts.jsp">Logout</a></li>
+                      <li><a href="login.jsp">Logout</a></li>
                   </ul>
               </nav>
               <div class="clear"></div>
@@ -74,8 +78,7 @@
 </cufon>
     	<div class="container_12 top">
             <div class="grid_4">
-
-              <%
+			<%
                 ArrayList list =new ArrayList();
                 list=(ArrayList)request.getAttribute("maListe");
                 Iterator monIterator=list.iterator();
@@ -83,6 +86,7 @@
                   site Site =(site)monIterator.next();
                 }
               %>
+              
               <div class="grid_12 box-2 pad-1">
 				<div>
 				<p class="text-3">
@@ -97,7 +101,7 @@
     </section> 
 <!--==============================footer=================================-->
   <footer>
-      <p>© 2012 Start-Up<br> Website Template by <a class="link" href="http://www.templatemonster.com/" target="_blank" rel="nofollow">www.templatemonster.com</a></p>
+      <p>Â© 2012 Start-Up<br> Website Template by <a class="link" href="http://www.templatemonster.com/" target="_blank" rel="nofollow">www.templatemonster.com</a></p>
       <div class="soc-icons"><span>Follow Us:</span><a href="#"><img src="images/icon-1.jpg" alt=""></a><a href="#"><img src="images/icon-2.jpg" alt=""></a><a href="#"><img src="images/icon-3.jpg" alt=""></a></div>
   </footer>	
 </body>
