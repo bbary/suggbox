@@ -54,9 +54,9 @@
               <nav>  
                 <ul class="menu">
                       <li><a href="create.jsp">Create</a></li>
-                      <li><a href="display.jsp">Display</a></li>
-                      <li><a href="products.jsp">Delete</a></li>
-                      <li><a href="contacts.jsp">Logout</a></li>
+                      <li><a href="display">Display</a></li>
+                      <li><a href="delete">Delete</a></li>
+                      <li><a href="login.jsp">Logout</a></li>
                   </ul>
               </nav>
               <div class="clear"></div>

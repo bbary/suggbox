@@ -13,6 +13,12 @@ public class Idea {
 	private ArrayList<Comment> comments;
 	private ArrayList<Note> notes;
 	
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
+	}
 	public ArrayList<Note> getNotes() {
 		return notes;
 	}
@@ -23,15 +29,7 @@ public class Idea {
 		return idIdea;
 	}
 	public  void createIdea() { // this function must not be called out of the servlet SuggboxDB
-//		StackTraceElement[] e = Thread.currentThread().getStackTrace();
-//		if(!e[2].getClassName().equals("servlets.SuggboxDB"))
-//			System.out.println("Warning: the caller is not SuggboxDB");
-//		for(Idea i: SuggboxDB.getInstance().getAllIdeas())
-//			System.out.println(i.getIdeaTitle()+ " "+i.getIdIdea());
-//		int lastId=SuggboxDB.getInstance().getAllIdeas().get(SuggboxDB.getInstance().getAllIdeas().size()-1).getIdIdea();
-//		System.out.println("id idea "+lastId);
-	//	idIdea=lastId+1;
-		//System.out.println("id idea "+SuggboxDB.getInstance().getIdea("title idea 1").getIdIdea());
+		idIdea=SuggboxDB.getInstance().getLastRow("idea")+1;
 	}
 	public void setIdeaId(int id){
 		idIdea=id;

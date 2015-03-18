@@ -25,7 +25,7 @@ public class FirstPage extends HttpServlet {
 //    	    }
     	 
     	    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	    	System.out.println("id idea "+SuggboxDB.getInstance().getIdea("title idea 1").getIdIdea());
+    	    	//System.out.println("last row "+SuggboxDB.getInstance().getLastRow("idea"));
     	    	HttpSession session = request.getSession(); 
     	        String login = request.getParameter("login");
 

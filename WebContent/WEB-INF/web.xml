@@ -18,11 +18,22 @@
     <url-pattern>/create</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>addIdea</servlet-name>
+    <servlet-name>ideas</servlet-name>
     <servlet-class>servlets.Ideas</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>addIdea</servlet-name>
+    <servlet-name>ideas</servlet-name>
     <url-pattern>/addIdea</url-pattern>
+    <url-pattern>/display</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>comment</servlet-name>
+    <servlet-class>servlets.Comments</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>comment</servlet-name>
+    <url-pattern>/comment</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

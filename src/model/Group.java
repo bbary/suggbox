@@ -2,11 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
+import database.SuggboxDB;
+
 public class Group {
 	private int idGroup;
 	private String name;
 	private String service;
-	private ArrayList<User> members;
+	
 	
 	
 	public int getIdGroup() {
@@ -17,12 +19,8 @@ public class Group {
 		this.idGroup = idGroup;
 	}
 
-	public static void createGroup() { // this function must not be called out of the servlet SuggboxDB
-//		StackTraceElement[] e = Thread.currentThread().getStackTrace();
-//
-//		if(!e[2].getClassName().equals("servlets.SuggboxDB"))
-//			System.out.println("Warning: the caller is not SuggboxDB");
-//		idGroup++;
+	public  void createGroup() { // this function must not be called out of the servlet SuggboxDB
+		idGroup=SuggboxDB.getInstance().getLastRow("group")+1;
 	}
 	
 	public String getName() {

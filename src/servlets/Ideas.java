@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +24,11 @@ public class Ideas extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		  RequestDispatcher dispatcher = request.getRequestDispatcher("display.jsp");
+          ArrayList<Idea> ideas=new ArrayList<Idea>();
+          ideas=SuggboxDB.getInstance().getAllIdeas();
+          request.setAttribute("ideas", ideas);
+          dispatcher.forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,7 +47,7 @@ public class Ideas extends HttpServlet {
 			//idea.setIdeaOwner(ideaOwner);
 			idea.setIdeaText(text);
 			idea.setIdeaTitle(title);
-			SuggboxDB.getInstance().addIdea(idea);
+			SuggboxDB.getInstance().addIdea(idea, ideaOwner);
 			
 	            dispatcher = request.getRequestDispatcher("create.jsp");
 	            String success = "the idea is added successfully";
