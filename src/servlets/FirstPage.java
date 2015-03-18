@@ -7,47 +7,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
+
+import model.User;
+import database.SuggboxDB;
 
 
 public class FirstPage extends HttpServlet {
-	
-    	  	private String paramLogin;
-    	    private String paramPassword;
-    	     
-    	    public void init() throws ServletException {
-    	        this.paramLogin = "zero";
-    	        this.paramPassword = "zero";
-    	    }
-    	    private static final long serialVersionUID = 1L;
+		    private static final long serialVersionUID = 1L;
 
+//		    public void doGet(HttpServletRequest request, HttpServletResponse response)
+//    				throws ServletException, IOException {
+//    			RequestDispatcher dispatcher = null;
+//    			dispatcher = request.getRequestDispatcher("login.jsp");
+//    			dispatcher.forward(request, response);
+//    	    }
     	 
-    	    /**
-    	     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-    	     */
-    		public void doGet(HttpServletRequest request, HttpServletResponse response)
-    				throws ServletException, IOException {
-    			RequestDispatcher dispatcher = null;
-    			dispatcher = request.getRequestDispatcher("login.jsp");
-    			dispatcher.forward(request, response);
-    	    }
-    	 
-    	    /**
-    	     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-    	     */
     	    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    	    	
+    	    	//System.out.println("last row "+SuggboxDB.getInstance().getLastRow("idea"));
+    	    	HttpSession session = request.getSession(); 
     	        String login = request.getParameter("login");
-    	        String pwd = request.getParameter("pwd");
-    	         
+
     	        RequestDispatcher dispatcher = null;
-    	        
-    	        if(this.paramLogin.equalsIgnoreCase(login) && this.paramPassword.equalsIgnoreCase(pwd)){
+    			
+    			User user=new User();
+    			user=SuggboxDB.getInstance().getUser(login);
+    			session.setAttribute("user", user);
+    			//System.out.println("login "+user.getLogin());		
+    			
+    	        if(user.getLogin()!=null){
     	            dispatcher = request.getRequestDispatcher("create.jsp");
-    	             String msg1 = "Hello " + login +" Your login is sucessful";
-    	            request.setAttribute("messagerreur", msg1);
-    	            System.out.println("affichage ok ");
+    	            request.setAttribute("login", user.getLogin());
+    	            
     	        }
     	        else{
     	            dispatcher = request.getRequestDispatcher("login.jsp");
@@ -55,5 +47,6 @@ public class FirstPage extends HttpServlet {
     	            request.setAttribute("messagerreur", msg2);
     	        }
     	        dispatcher.forward(request, response);
+    	        //SuggboxDB.getInstance().closeConnection();
     	        }
     	    }    	

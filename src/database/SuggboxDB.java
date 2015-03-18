@@ -15,42 +15,57 @@ import model.Idea;
 import model.Note;
 import model.User;
 
-public class SuggboxDB implements DB {
+public final class SuggboxDB implements DB {
 
 	private Connection connexion = null;
 	private Statement statement = null;
 	private PreparedStatement stmt = null;
+	private static volatile SuggboxDB instance = null;
+	
+	  private SuggboxDB() {
+		  super();
+    		String dbUrl = "jdbc:mysql://localhost:3306/suggboxDB";
+			String mysqlUser = "root";				
+			String password = "thatismypath";	
+			String driver="com.mysql.jdbc.Driver";
+			/* Chargement du driver JDBC pour MySQL */
+			try {
+				Class.forName(driver);
 
-	public SuggboxDB(String dbUrl, String mysqlUser, String password,
-			String driver) {
-		/* Chargement du driver JDBC pour MySQL */
-		try {
-			Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				/* Connexion à la base de données */
+				connexion = DriverManager.getConnection(dbUrl, mysqlUser, password);
+				/* Création de l'objet gérant les requêtes */
+				statement = connexion.createStatement();
 
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			/* Connexion à la base de données */
-			connexion = DriverManager.getConnection(dbUrl, mysqlUser, password);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+	     }
 
-			/* Création de l'objet gérant les requêtes */
-			statement = connexion.createStatement();
+	  public final static SuggboxDB getInstance() {
+	         if (SuggboxDB.instance == null) {
+	         
+	            synchronized(SuggboxDB.class) {
+	              if (SuggboxDB.instance == null) {
+	            	  SuggboxDB.instance = new SuggboxDB();
+	              }
+	            }
+	         }
+	         return SuggboxDB.instance;
+	     }
 
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-	}
 
 	@Override
 	public void addUser(User u) {
 		try {
-
 			stmt = connexion
 					.prepareStatement("insert into User(id_user, login, firstname, lastname) values(?, ?, ?, ?)");
-			User.createUser();
-			stmt.setInt(1, User.getIdUser());
+			u.createUser();
+			stmt.setInt(1, u.getIdUser());
 			stmt.setString(2, u.getLogin());
 			stmt.setString(3, u.getFirstName());
 			stmt.setString(4, u.getLastName());
@@ -67,14 +82,11 @@ public class SuggboxDB implements DB {
 					e.printStackTrace();
 				}
 		}
-
 	}
 
 	@Override
 	public void deleteUser(String login) {
-
 		try {
-
 			stmt = connexion.prepareStatement("delete from User where login=?");
 			stmt.setString(1, login);
 			stmt.executeUpdate();
@@ -90,7 +102,6 @@ public class SuggboxDB implements DB {
 					e.printStackTrace();
 				}
 		}
-
 	}
 
 	@Override
@@ -107,6 +118,7 @@ public class SuggboxDB implements DB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		int idUser=0;
 		String firstname = null;
 		String lastname = null;
 		String loginUser = null;
@@ -114,10 +126,12 @@ public class SuggboxDB implements DB {
 		try {
 
 			while (resultat.next()) {
+				idUser=resultat.getInt("id_user");
 				firstname = resultat.getString("firstname");
 				lastname = resultat.getString("lastname");
 				loginUser = resultat.getString("login");
 			}
+			u.setIdUser(idUser);
 			u.setFirstName(firstname);
 			u.setLastName(lastname);
 			u.setLogin(loginUser);
@@ -132,6 +146,8 @@ public class SuggboxDB implements DB {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			else
+				u=null;
 			if (stmt != null)
 				try {
 					stmt.close();
@@ -147,15 +163,17 @@ public class SuggboxDB implements DB {
 
 
 	@Override
-	public void addIdea(Idea i) {
+	public void addIdea(Idea i, User u) {
 		try {
 
 			stmt = connexion
-					.prepareStatement("insert into idea(id_idea, text_idea, title_idea) values(?, ?, ?)");
-			Idea.createIdea();
-			stmt.setInt(1, Idea.getIdIdea());
-			stmt.setString(1, i.getIdeaText());
-			stmt.setString(1, i.getIdeaTitle());
+					.prepareStatement("insert into idea(id_idea, text_idea, title_idea, id_user) values(?, ?, ?, ?)");
+			i.createIdea();
+			System.out.println("i.getIdIdea() "+i.getIdIdea());
+			stmt.setInt(1, i.getIdIdea());
+			stmt.setString(2, i.getIdeaText());
+			stmt.setString(3, i.getIdeaTitle());
+			stmt.setInt(4, u.getIdUser());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -221,7 +239,7 @@ public class SuggboxDB implements DB {
 		try {
 
 			stmt = connexion
-					.prepareStatement("select title_idea, text_idea, login from User, idea where idea.title_idea=? AND idea.id_user=User.id_user");
+					.prepareStatement("select id_idea, title_idea, text_idea, login from User, idea where idea.title_idea=? AND idea.id_user=User.id_user");
 			stmt.setString(1, ideaTitle);
 			resultat = stmt.executeQuery();
 			PreparedStatement stmt2=connexion.prepareStatement("select id_note, title_idea, text_idea, login, nbr_stars from User, note, idea where idea.title_idea=? AND idea.id_user=User.id_user AND idea.id_idea=note.id_idea");
@@ -234,14 +252,18 @@ public class SuggboxDB implements DB {
 			e.printStackTrace();
 		}
 		
+		int idIdea=0;
 		String title = null;
 		String text = null;
 		User owner=new User();
 		int idNote=0;
 		ArrayList<Note> notes=new ArrayList<Note>();
+		ArrayList<Comment> comments=new ArrayList<Comment>();
+		comments=getComments(ideaTitle);
 		try {
 
 			while (resultat.next()) {
+				idIdea=resultat.getInt("id_idea");
 				title = resultat.getString("title_idea");
 				text  = resultat.getString("text_idea");
 				owner = getUser(resultat.getString("login"));
@@ -252,11 +274,12 @@ public class SuggboxDB implements DB {
 				idNote=resultat2.getInt("id_note");
 				notes.add(getNote(idNote));												
 			}
-			
+			idea.setIdeaId(idIdea);
 			idea.setIdeaText(text);
 			idea.setIdeaTitle(title);
 			idea.setIdeaOwner(owner);
 			idea.setNotes(notes);
+			idea.setComments(comments);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -280,15 +303,15 @@ public class SuggboxDB implements DB {
 	}
 
 	@Override
-	public void addComment(Comment comment) {
+	public void addComment(Comment comment, User user, Idea i) {
 		try {
 			stmt = connexion
 					.prepareStatement("insert into comment(id_comment, text_comment, id_idea, id_user) values(?, ?, ?, ?)");
-			Comment.createComment();  // increment id    
-			stmt.setInt(1, Comment.getIdComment()); 
+			comment.createComment();  // increment id    
+			stmt.setInt(1, comment.getIdComment()); 
 			stmt.setString(2, comment.getComment());
-			stmt.setInt(3, comment.getCommentedIdea().getIdIdea());
-			stmt.setInt(4, comment.getCommentator().getIdUser());
+			stmt.setInt(3, i.getIdIdea());
+			stmt.setInt(4, user.getIdUser());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -319,8 +342,8 @@ public class SuggboxDB implements DB {
 		try {
 		while(res.next()){
 			Comment com=new Comment();
+			com.setIdComment(res.getInt("id_comment"));
 			com.setComment(res.getString("text_comment"));
-			com.setCommentedIdea(getIdea(res.getString("title_idea")));
 			com.setCommentator(getUser(res.getString("login")));
 			comments.add(com);
 					
@@ -353,12 +376,10 @@ public class SuggboxDB implements DB {
 	public void addNote(Note note) {
 		try {
 			stmt = connexion
-					.prepareStatement("insert into note(id_note, nbr_stars, id_idea, id_user) values(?, ?, ?, ?)");
+					.prepareStatement("insert into note(id_note, nbr_stars) values(?, ?)");
 			note.createNote();  // increment id    
 			stmt.setInt(1, note.getIdNote()); 
 			stmt.setInt(2, note.getStars());
-			stmt.setInt(3, note.getIdea().getIdIdea());
-			stmt.setInt(4, note.getEvaluator().getIdUser());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -380,7 +401,7 @@ public class SuggboxDB implements DB {
 		Note note=new Note();
 		ResultSet result=null;
 		try {
-			stmt=connexion.prepareStatement("select id_note, login, title_idea from note, User, idea where id_note=? AND User.id_user=note.id_user AND idea.id_idea=note.id_idea");
+			stmt=connexion.prepareStatement("select id_note, nbr_stars from note where id_note=?");
 			stmt.setInt(1, idNote);
 			result=stmt.executeQuery();
 		} catch (SQLException e) {
@@ -389,9 +410,9 @@ public class SuggboxDB implements DB {
 		}
 		
 		try {
-			note.setEvaluator(getUser(result.getString("login")));
-			note.setIdea(getIdea(result.getString("title_idea")));
+			result.next();
 			note.setStars(result.getInt("nbr_stars"));
+			note.setIdNote(result.getInt("id_note"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -467,7 +488,7 @@ public class SuggboxDB implements DB {
 		
 		ResultSet result=null;
 		try {
-			stmt=connexion.prepareStatement("select name_group, service_group from Group where name_group=?");
+			stmt=connexion.prepareStatement("select id_group, name_group, service_group from Group where name_group=?");
 			stmt.setString(1, namegroup);
 			result=stmt.executeQuery();
 		} catch (SQLException e) {
@@ -476,6 +497,7 @@ public class SuggboxDB implements DB {
 		}
 		
 		try {
+			group.setIdGroup(result.getInt("id_group"));
 			group.setName(result.getString("name_group"));
 			group.setService(result.getString("service_group"));
 			
@@ -539,6 +561,53 @@ public class SuggboxDB implements DB {
 
 	}
 
-
-
+	@Override
+	public int getLastRow(String tab)  {
+		int r=-1;
+		
+		String table=null;
+		String column=null;
+		if(tab.equals("user")){
+			table="User";
+			column="id_user";
+		}
+		else if(tab.equals("group")){
+			table="Group";
+			column="id_group";
+		}
+		else if(tab.equals("idea")){
+			table="idea";
+			column="id_idea";
+		}
+		else if(tab.equals("comment")){
+			table="comment";
+			column="id_comment";
+		}
+		else if(tab.equals("note")){
+			table="note";
+			column="id_note";
+		}
+			
+		ResultSet res=null;
+		//stmt=connexion.prepareStatement("select "+column+" from "+table+" order by "+column+" desc limit 1");
+		try {
+			
+			
+			res=statement.executeQuery("select "+column+" from "+table+" order by "+column+" desc limit 1");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			res.next();
+			r=res.getInt(column);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return r;
+		
+	}
 }

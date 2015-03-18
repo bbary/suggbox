@@ -7,10 +7,10 @@
 <head>
     <title>Create</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/grid_12.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/slider.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/reset.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/grid_12.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/slider.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
     <script src="js/jquery-1.7.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -57,10 +57,10 @@
               <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1> 
               <nav>  
                 <ul class="menu">
-                      <li><a href="index.jsp">Create</a></li>
-                      <li><a href="services.jsp">Display</a></li>
-                      <li><a href="products.jsp">Delete</a></li>
-                      <li><a href="contacts.jsp">Logout</a></li>
+                      <li><a href="create.jsp">Create</a></li>
+                      <li><a href="display">Display</a></li>
+                      <li><a href="delete">Delete</a></li>
+                      <li><a href="login.jsp">Logout</a></li>
                   </ul>
               </nav>
               <div class="clear"></div>

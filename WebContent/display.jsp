@@ -1,15 +1,18 @@
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Iterator"%>
+<%@ page import="model.Idea"%>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
     <title>Display</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/grid_12.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/slider.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/reset.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/grid_12.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/slider.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
     <script src="js/jquery-1.7.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -57,8 +60,8 @@
               <nav>  
                  <ul class="menu">
                       <li><a href="create.jsp">Create</a></li>
-                      <li><a href="display.jsp">Display</a></li>
-                      <li><a href="products.jsp">Delete</a></li>
+                      <li><a href="display">Display</a></li>
+                      <li><a href="delete">Delete</a></li>
                       <li><a href="login.jsp">Logout</a></li>
                   </ul>
               </nav>
@@ -77,30 +80,35 @@
 </cufon>
     	<div class="container_12 top">
             <div class="grid_4">
+            <div class="grid_12 box-2 pad-1">
 			<%
+			ArrayList test=new ArrayList();
+			
                 ArrayList list =new ArrayList();
-                list=(ArrayList)request.getAttribute("maListe");
+                list=(ArrayList<Idea>)request.getAttribute("ideas");
                 Iterator monIterator=list.iterator();
                 while(monIterator.hasNext()){
-                  site Site =(site)monIterator.next();
-                }
+                     Idea i=(Idea)monIterator.next();
+                %>     
+              		<div>
+				<p class="text-3"><%= i.getIdeaTitle() %></p>
+				<p class="text-4"><%= i.getIdeaText() %></p>
+				<!-- <p class="top-4"><a href="#" class="link">df </a><br></p> -->
+                <a href="comment?ideaTitle=<%= i.getIdeaTitle() %>" class="button top-4">Read Comments</a>
+            		</div>
+              
+              <%  }
               %>
               
-              <div class="grid_12 box-2 pad-1">
-				<div>
-				<p class="text-3">
-				<p class="text-4">
-				<p class="top-4"><a href="#" class="link"><%=Site.getLibelle()%></a><br>
-                	<%=Site.getLibelle()%></p>
-                <a href="#" class="button top-4">Read More</a>
-            </div>
+              
+				
 			</div>
         </div>
         </form>
     </section> 
 <!--==============================footer=================================-->
   <footer>
-      <p>Â© 2012 Start-Up<br> Website Template by <a class="link" href="http://www.templatemonster.com/" target="_blank" rel="nofollow">www.templatemonster.com</a></p>
+      
       <div class="soc-icons"><span>Follow Us:</span><a href="#"><img src="images/icon-1.jpg" alt=""></a><a href="#"><img src="images/icon-2.jpg" alt=""></a><a href="#"><img src="images/icon-3.jpg" alt=""></a></div>
   </footer>	
 </body>

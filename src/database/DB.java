@@ -8,16 +8,17 @@ public interface DB {
 	void addUser(User u);
 	void deleteUser(String login);     //// the database column login is unique
 	User getUser(String login);
+	//ArrayList<Idea> getAllIdeas();
 	
 	//id_idea, text_idea, title_idea, id_user
-	void addIdea(Idea i);
+	void addIdea(Idea i, User u);
 	void deleteIdea(String ideaTitle);  // the database column title_idea is unique
 	void updateIdea(String ideaTitle, Idea idea);
 	Idea getIdea(String ideaTitle);
 	ArrayList<Idea> getAllIdeas();
 	
 	//id_comment, text_comment, id_idea, id_user
-	void addComment(Comment c);
+	void addComment(Comment c, User u, Idea i);
 	ArrayList<Comment> getComments(String ideaTitle);
 	
 	//id_note, nbr_stars, id_idea, id_user
@@ -29,6 +30,7 @@ public interface DB {
 	void deleteGroup(String namegroup);
 	Group getGroup(String namegroup);
 	
+	int getLastRow(String table);
 	void closeConnection();
 	
 }
