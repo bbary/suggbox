@@ -1,25 +1,29 @@
 package model;
 
-import servlets.Example;
 import database.SuggboxDB;
 
 public class User {
 
-private static int idUser=0; 	
+private int idUser; 	
 private String firstName;
 private String lastName;
 private String login;
 private boolean isAdmin=false;
 
-public static int getIdUser() {
+public int getIdUser() {
 	return idUser;
 }
-public static void createUser() {  // this function must not be called out of the servlet SuggboxDB
-	StackTraceElement[] e = Thread.currentThread().getStackTrace();
 
-	if(!e[2].getClassName().equals("servlets.SuggboxDB"))
-		System.out.println("Warning: the caller is not SuggboxDB");
-	idUser++;
+public void setIdUser(int idUser) {
+	this.idUser = idUser;
+}
+
+public void createUser() {  // this function must not be called out of the servlet SuggboxDB
+//	StackTraceElement[] e = Thread.currentThread().getStackTrace();
+//
+//	if(!e[2].getClassName().equals("servlets.SuggboxDB"))
+//		System.out.println("Warning: the caller is not SuggboxDB");
+//	idUser++;
 }
 
 public String getFirstName() {

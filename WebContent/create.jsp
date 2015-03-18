@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Create</title>
@@ -78,18 +77,19 @@
           </ul>
        </div>
     </div>
-<FORM method="post" action="">
+
 <table width="247" height="10" border="0">
    <div class="container_12 top">
             	<h2>Title of Idea</h2>
-            	<form id="form" method="post" >
+            	<form id="form" method="post" action="addIdea">
 
-                      <label><input type="text" value="Title" size="35" onBlur="if(this.value=='') {this.value='Title'}" onFocus="if(this.value =='Title' ) this.value=''"></label><br>
+                      <label><input  type="text"  name="title" size="35" required></label><br>
                       <h2>Idea</h2>
-                      <label><textarea rows="4" cols="100" onBlur="if(this.value=='') {this.value='Idea'}" onFocus="if(this.value =='Idea' ) this.value=''"></textarea></label>
+                      <label><textarea rows="4" cols="100" name="text"   required></textarea></label>
 
-                      <div class="btns"><a href="#" class="button">Clear</a><a href="#" class="button" onClick="document.getElementById('form').submit()">Send</a></div> 
+                      <div class="btns"><input class="button" type="submit"></div> 
                   </form> 
+                  <p> ${success}</p>
             </div>
 </table>
 </section>

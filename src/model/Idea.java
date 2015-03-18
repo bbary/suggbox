@@ -2,9 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
+import database.SuggboxDB;
+
 public class Idea {
 
-	private static int idIdea=0; 
+	private  int idIdea; 
 	private String ideaText;
 	private String ideaTitle;
 	private User ideaOwner;
@@ -17,23 +19,24 @@ public class Idea {
 	public void setNotes(ArrayList<Note> notes) {
 		this.notes = notes;
 	}
-	public static int getIdIdea() {
+	public  int getIdIdea() {
 		return idIdea;
 	}
-	public static void createIdea() { // this function must not be called out of the servlet SuggboxDB
-		StackTraceElement[] e = Thread.currentThread().getStackTrace();
-
-		if(!e[2].getClassName().equals("servlets.SuggboxDB"))
-			System.out.println("Warning: the caller is not SuggboxDB");
-		idIdea++;
+	public  void createIdea() { // this function must not be called out of the servlet SuggboxDB
+//		StackTraceElement[] e = Thread.currentThread().getStackTrace();
+//		if(!e[2].getClassName().equals("servlets.SuggboxDB"))
+//			System.out.println("Warning: the caller is not SuggboxDB");
+//		for(Idea i: SuggboxDB.getInstance().getAllIdeas())
+//			System.out.println(i.getIdeaTitle()+ " "+i.getIdIdea());
+//		int lastId=SuggboxDB.getInstance().getAllIdeas().get(SuggboxDB.getInstance().getAllIdeas().size()-1).getIdIdea();
+//		System.out.println("id idea "+lastId);
+	//	idIdea=lastId+1;
+		//System.out.println("id idea "+SuggboxDB.getInstance().getIdea("title idea 1").getIdIdea());
 	}
-	
-//	public Note getNote() {
-//		return note;
-//	}
-//	public void setNote(Note note) {
-//		this.note = note;
-//	}
+	public void setIdeaId(int id){
+		idIdea=id;
+	}
+
 	public String getIdeaText() {
 		return ideaText;
 	}

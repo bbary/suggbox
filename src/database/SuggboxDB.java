@@ -15,42 +15,57 @@ import model.Idea;
 import model.Note;
 import model.User;
 
-public class SuggboxDB implements DB {
+public final class SuggboxDB implements DB {
 
 	private Connection connexion = null;
 	private Statement statement = null;
 	private PreparedStatement stmt = null;
+	private static volatile SuggboxDB instance = null;
+	
+	  private SuggboxDB() {
+		  super();
+    		String dbUrl = "jdbc:mysql://localhost:3306/suggboxDB";
+			String mysqlUser = "root";				
+			String password = "thatismypath";	
+			String driver="com.mysql.jdbc.Driver";
+			/* Chargement du driver JDBC pour MySQL */
+			try {
+				Class.forName(driver);
 
-	public SuggboxDB(String dbUrl, String mysqlUser, String password,
-			String driver) {
-		/* Chargement du driver JDBC pour MySQL */
-		try {
-			Class.forName(driver);
+			} catch (ClassNotFoundException e) {
+				System.out.println(e.getMessage());
+			}
+			try {
+				/* Connexion à la base de données */
+				connexion = DriverManager.getConnection(dbUrl, mysqlUser, password);
+				/* Création de l'objet gérant les requêtes */
+				statement = connexion.createStatement();
 
-		} catch (ClassNotFoundException e) {
-			System.out.println(e.getMessage());
-		}
-		try {
-			/* Connexion à la base de données */
-			connexion = DriverManager.getConnection(dbUrl, mysqlUser, password);
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+	     }
 
-			/* Création de l'objet gérant les requêtes */
-			statement = connexion.createStatement();
+	  public final static SuggboxDB getInstance() {
+	         if (SuggboxDB.instance == null) {
+	         
+	            synchronized(SuggboxDB.class) {
+	              if (SuggboxDB.instance == null) {
+	            	  SuggboxDB.instance = new SuggboxDB();
+	              }
+	            }
+	         }
+	         return SuggboxDB.instance;
+	     }
 
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-
-	}
 
 	@Override
 	public void addUser(User u) {
 		try {
-
 			stmt = connexion
 					.prepareStatement("insert into User(id_user, login, firstname, lastname) values(?, ?, ?, ?)");
-			User.createUser();
-			stmt.setInt(1, User.getIdUser());
+			u.createUser();
+			stmt.setInt(1, u.getIdUser());
 			stmt.setString(2, u.getLogin());
 			stmt.setString(3, u.getFirstName());
 			stmt.setString(4, u.getLastName());
@@ -67,14 +82,11 @@ public class SuggboxDB implements DB {
 					e.printStackTrace();
 				}
 		}
-
 	}
 
 	@Override
 	public void deleteUser(String login) {
-
 		try {
-
 			stmt = connexion.prepareStatement("delete from User where login=?");
 			stmt.setString(1, login);
 			stmt.executeUpdate();
@@ -90,7 +102,6 @@ public class SuggboxDB implements DB {
 					e.printStackTrace();
 				}
 		}
-
 	}
 
 	@Override
@@ -132,6 +143,8 @@ public class SuggboxDB implements DB {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			else
+				u=null;
 			if (stmt != null)
 				try {
 					stmt.close();
@@ -152,10 +165,10 @@ public class SuggboxDB implements DB {
 
 			stmt = connexion
 					.prepareStatement("insert into idea(id_idea, text_idea, title_idea) values(?, ?, ?)");
-			Idea.createIdea();
-			stmt.setInt(1, Idea.getIdIdea());
-			stmt.setString(1, i.getIdeaText());
-			stmt.setString(1, i.getIdeaTitle());
+			i.createIdea();
+			stmt.setInt(1, i.getIdIdea());
+			stmt.setString(2, i.getIdeaText());
+			stmt.setString(3, i.getIdeaTitle());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -284,8 +297,8 @@ public class SuggboxDB implements DB {
 		try {
 			stmt = connexion
 					.prepareStatement("insert into comment(id_comment, text_comment, id_idea, id_user) values(?, ?, ?, ?)");
-			Comment.createComment();  // increment id    
-			stmt.setInt(1, Comment.getIdComment()); 
+			comment.createComment();  // increment id    
+			stmt.setInt(1, comment.getIdComment()); 
 			stmt.setString(2, comment.getComment());
 			stmt.setInt(3, comment.getCommentedIdea().getIdIdea());
 			stmt.setInt(4, comment.getCommentator().getIdUser());
@@ -389,6 +402,7 @@ public class SuggboxDB implements DB {
 		}
 		
 		try {
+			result.next();
 			note.setEvaluator(getUser(result.getString("login")));
 			note.setIdea(getIdea(result.getString("title_idea")));
 			note.setStars(result.getInt("nbr_stars"));

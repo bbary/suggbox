@@ -7,10 +7,10 @@
 <head>
     <title>Create</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" media="screen" href="/suggb/css/reset.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/suggb/css/grid_12.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/suggb/css/style.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/suggb/css/slider.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/reset.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/grid_12.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/css/slider.css">
     <link href='http://fonts.googleapis.com/css?family=Lato:300italic' rel='stylesheet' type='text/css'>
     <script src="js/jquery-1.7.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -66,8 +66,8 @@
 						style="width:50%;margin:auto;padding-bottom:15px;" method="post">
                  
         				<h2 style="text-align:center;">Suggbox</h2>
-        				<p style="text-align:center;"> Name : <input type="text" name="login" /></p>
-        				<p style="text-align:center;"> Password : <input type="password" name="pwd" /></p>
+        				<p style="text-align:center;"> Login : <input type="text" name="login" /></p>
+        				
              
         				<p style="text-align:center;width:50%;margin:auto;"><input type="submit" name="Valider" value="Valider"/></p>
     					</form>
